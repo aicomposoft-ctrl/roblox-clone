@@ -1,0 +1,165 @@
+{
+  "name": "MarketFlow Platform",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12",
+      "installTools": true
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20",
+      "nodeGypDependencies": true
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "moby": true,
+      "dockerDashComposeVersion": "v2"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest",
+      "ppa": true
+    }
+  },
+
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+
+  "forwardPorts": [
+    3000,
+    8000,
+    5432,
+    6379,
+    9000,
+    9001,
+    5555
+  ],
+
+  "portsAttributes": {
+    "3000": {
+      "label": "Frontend (Next.js)",
+      "onAutoForward": "openBrowser"
+    },
+    "8000": {
+      "label": "Backend API (FastAPI)",
+      "onAutoForward": "notify"
+    },
+    "9001": {
+      "label": "MinIO Console",
+      "onAutoForward": "silent"
+    },
+    "5555": {
+      "label": "Flower (Celery Monitor)",
+      "onAutoForward": "silent"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Python / FastAPI
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        "charliermarsh.ruff",
+        "ms-python.mypy-type-checker",
+        "njpwerner.autodocstring",
+
+        // TypeScript / Next.js
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "dsznajder.es7-react-js-snippets",
+        "formulahendry.auto-rename-tag",
+
+        // Docker
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers",
+
+        // Database
+        "cweijan.vscode-postgresql-client2",
+        "cweijan.vscode-redis-client",
+
+        // Git
+        "eamodio.gitlens",
+        "mhutchie.git-graph",
+
+        // AI / Claude
+        "anthropics.claude-code",
+
+        // Markdown / Docs
+        "yzhang.markdown-all-in-one",
+        "bierner.markdown-mermaid",
+
+        // General
+        "editorconfig.editorconfig",
+        "mikestead.dotenv",
+        "streetsidesoftware.code-spell-checker",
+        "streetsidesoftware.code-spell-checker-russian"
+      ],
+      "settings": {
+        // Python
+        "python.defaultInterpreterPath": "/usr/local/bin/python3.12",
+        "python.formatting.provider": "black",
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.black-formatter",
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.organizeImports": "always"
+          }
+        },
+        "ruff.enable": true,
+        "ruff.organizeImports": true,
+
+        // TypeScript
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": true
+        },
+        "[typescriptreact]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": true
+        },
+
+        // Editor
+        "editor.fontSize": 14,
+        "editor.tabSize": 2,
+        "editor.rulers": [88, 120],
+        "editor.bracketPairColorization.enabled": true,
+        "editor.minimap.enabled": false,
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true,
+
+        // Terminal
+        "terminal.integrated.defaultProfile.linux": "bash",
+
+        // Git
+        "git.autofetch": true,
+        "gitlens.hovers.currentLine.over": "line",
+
+        // Tailwind
+        "tailwindCSS.experimental.classRegex": [
+          ["cn\\(([^)]*)\\)", "'([^']*)'"]
+        ],
+
+        // DB connections (update with actual credentials)
+        "postgresql.connections": [
+          {
+            "host": "localhost",
+            "user": "marketflow",
+            "database": "marketflow",
+            "port": 5432
+          }
+        ]
+      }
+    }
+  },
+
+  "remoteEnv": {
+    "PYTHONPATH": "/workspaces/roblox-clone/backend",
+    "NODE_ENV": "development"
+  },
+
+  "mounts": [
+    "source=${localWorkspaceFolder}/.devcontainer/.bash_history,target=/home/vscode/.bash_history,type=bind,consistency=cached"
+  ]
+}

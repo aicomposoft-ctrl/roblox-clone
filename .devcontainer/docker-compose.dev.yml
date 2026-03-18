@@ -1,0 +1,53 @@
+# Docker Compose for Codespaces development
+# Only supporting services — app runs via uvicorn/npm directly in devcontainer
+
+version: "3.9"
+
+services:
+  timescaledb:
+    image: timescale/timescaledb:2.14.2-pg16
+    environment:
+      POSTGRES_USER: marketflow
+      POSTGRES_PASSWORD: marketflow_dev_2026
+      POSTGRES_DB: marketflow
+      TIMESCALEDB_TELEMETRY: "off"
+    ports:
+      - "5432:5432"
+    volumes:
+      - timescaledb_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U marketflow -d marketflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "PING"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: marketflow
+      MINIO_ROOT_PASSWORD: marketflow_minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+
+volumes:
+  timescaledb_data:
+  redis_data:
+  minio_data:
