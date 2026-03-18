@@ -284,7 +284,19 @@ Command hierarchy: `/run` → `/start` → `/next` → `/go` → `/plan` | `/fea
 - SPARC docs: `docs/`
 - Validation report: `docs/validation-report.md`
 - BDD scenarios: `docs/test-scenarios.md`
-- CJM analysis: `docs/CJM-EasyCommerce.html`
+- CJM analysis: `docs/CJM-EasyCommerce.html` (3 варианта + микро-тренды PARANOID)
 - Market research: `docs/Research_Findings.md`
 - Development guide: `DEVELOPMENT_GUIDE.md`
 - MCP config: `.mcp.json`
+
+## Phase 0 Discovery Modules (Easy Commerce Reverse Engineering)
+
+| Файл | Содержание |
+|------|-----------|
+| `docs/Phase0-Discovery-Brief.md` | Сводный brief с PARANOID-verification (83% verified) |
+| `docs/M1-FactSheet.md` | Факты о Easy Commerce: команда, продукты, рейтинги |
+| `docs/M2-ProductCustomers.md` | JTBD, Value Prop, сегменты клиентов |
+| `docs/M3-MarketCompetition.md` | TAM/SAM, конкуренты, Blue Ocean карта |
+| `docs/M4-BusinessFinance.md` | Unit economics, монетизация, pricing tiers |
+| `docs/M5-GrowthEngine.md` | Каналы роста, PLG-механики, интеграции |
+| `docs/M6-PlaybookSynthesis.md` | Launch playbook синтез для MarketFlow |

@@ -1,0 +1,32 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/home/user/roblox-clone"],
+      "description": "Access project files for code generation and analysis"
+    },
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://marketflow:marketflow@localhost:5432/marketflow"
+      ],
+      "description": "Direct TimescaleDB access for schema inspection and query testing",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "redis": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-redis", "redis://localhost:6379"],
+      "description": "Redis access for cache inspection and rate limit debugging"
+    }
+  },
+  "notes": {
+    "marketplace_apis": "WB/Ozon/YM API keys are stored encrypted in TimescaleDB — never in MCP config",
+    "anthropic_api": "Set ANTHROPIC_API_KEY in .env — used by backend services, not MCP directly",
+    "ssrf_protection": "All external HTTP calls whitelist-validated to marketplace domains only",
+    "data_residency": "TimescaleDB hosted on AdminVPS/HOSTKEY (RU jurisdiction) for 152-ФЗ compliance"
+  }
+}
